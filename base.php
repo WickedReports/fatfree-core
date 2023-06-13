@@ -2635,7 +2635,7 @@ class Cache extends Prefab {
 				break;
 		}
 		if (!empty($raw)) {
-			list($val,$time,$ttl)=(array)$fw->unserialize($raw) + [null, 0, 0];
+			list($val,$time,$ttl)=(array)$fw->unserialize($raw) + [null, 0, -1];
 			if ($ttl===0 || $time+$ttl>microtime(TRUE))
 				return [$time,$ttl];
 			$val=null;
