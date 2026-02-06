@@ -722,7 +722,7 @@ final class Base extends Prefab implements ArrayAccess {
 	*	@param $arg mixed
 	*	@param $stack array
 	**/
-	function stringify($arg,array $stack=NULL) {
+	function stringify($arg,?array $stack=NULL) {
 		if ($stack) {
 			foreach ($stack as $node)
 				if ($arg===$node)
@@ -1304,7 +1304,7 @@ final class Base extends Prefab implements ArrayAccess {
 	*	@param $trace array|NULL
 	*	@param $format bool
 	**/
-	function trace(array $trace=NULL,$format=TRUE) {
+	function trace(?array $trace=NULL,$format=TRUE) {
 		if (!$trace) {
 			$trace=debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 			$frame=$trace[0];
@@ -1352,7 +1352,7 @@ final class Base extends Prefab implements ArrayAccess {
 	*	@param $trace array
 	*	@param $level int
 	**/
-	function error($code,$text='',array $trace=NULL,$level=0) {
+	function error($code,$text='',?array $trace=NULL,$level=0) {
 		$prior=$this->hive['ERROR'];
 		$header=$this->status($code);
 		$req=$this->hive['VERB'].' '.$this->hive['PATH'];
@@ -1431,7 +1431,7 @@ final class Base extends Prefab implements ArrayAccess {
 	*	@param $body string
 	**/
 	function mock($pattern,
-		array $args=NULL,array $headers=NULL,$body=NULL) {
+		?array $args=NULL,?array $headers=NULL,$body=NULL) {
 		if (!$args)
 			$args=[];
 		$types=['sync','ajax','cli'];
@@ -2354,11 +2354,7 @@ final class Base extends Prefab implements ArrayAccess {
 		if (extension_loaded('mbstring'))
 			mb_internal_encoding($charset);
 		ini_set('display_errors',0);
-		// Deprecated directives
-		@ini_set('magic_quotes_gpc',0);
-		@ini_set('register_globals',0);
-		// Intercept errors/exceptions; PHP5.3-compatible
-		$check=error_reporting((E_ALL|E_STRICT)&~(E_NOTICE|E_USER_NOTICE) ^ E_DEPRECATED);
+		$check=error_reporting(E_ALL&~(E_NOTICE|E_USER_NOTICE) ^ E_DEPRECATED);
 		set_exception_handler(
 			function($obj) {
 				/** @var Exception $obj */
@@ -2911,7 +2907,7 @@ class View extends Prefab {
 	*	@param $hive array
 	*	@param $mime string
 	**/
-	protected function sandbox(array $hive=NULL,$mime=NULL) {
+	protected function sandbox(?array $hive=NULL,$mime=NULL) {
 		$fw=$this->fw;
 		$implicit=FALSE;
 		if (is_null($hive)) {
@@ -2948,7 +2944,7 @@ class View extends Prefab {
 	*	@param $hive array
 	*	@param $ttl int
 	**/
-	function render($file,$mime='text/html',array $hive=NULL,$ttl=0) {
+	function render($file,$mime='text/html',?array $hive=NULL,$ttl=0) {
 		$fw=$this->fw;
 		$cache=Cache::instance();
 		foreach ($fw->split($fw->UI) as $dir) {
@@ -3095,7 +3091,7 @@ class Preview extends View {
 	*	@param $persist bool
 	*	@param $escape bool
 	**/
-	function resolve($node,array $hive=NULL,$ttl=0,$persist=FALSE,$escape=NULL) {
+	function resolve($node,?array $hive=NULL,$ttl=0,$persist=FALSE,$escape=NULL) {
 		$fw=$this->fw;
 		$cache=Cache::instance();
 		if ($escape!==NULL) {
@@ -3156,7 +3152,7 @@ class Preview extends View {
 	*	@param $hive array
 	*	@param $ttl int
 	**/
-	function render($file,$mime='text/html',array $hive=NULL,$ttl=0) {
+	function render($file,$mime='text/html',?array $hive=NULL,$ttl=0) {
 		$fw=$this->fw;
 		$cache=Cache::instance();
 		if (!is_dir($tmp=$fw->TEMP))
