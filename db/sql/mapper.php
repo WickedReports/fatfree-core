@@ -732,7 +732,7 @@ class Mapper extends \DB\Cursor {
 	*	Retrieve external iterator for fields
 	*	@return object
 	**/
-	function getiterator() {
+	function getiterator(): \Traversable {
 		return new \ArrayIterator($this->cast());
 	}
 
