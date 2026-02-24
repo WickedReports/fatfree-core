@@ -518,10 +518,6 @@ class Mapper extends \DB\Cursor {
 		return array_keys($this->document);
 	}
 
-	/**
-	*	Retrieve external iterator for fields
-	*	@return object
-	**/
 	function getiterator(): \Traversable {
 		return new \ArrayIterator($this->cast());
 	}

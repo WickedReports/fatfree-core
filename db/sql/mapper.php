@@ -728,10 +728,6 @@ class Mapper extends \DB\Cursor {
 			!$this->fields[$field]['nullable'];
 	}
 
-	/**
-	*	Retrieve external iterator for fields
-	*	@return object
-	**/
 	function getiterator(): \Traversable {
 		return new \ArrayIterator($this->cast());
 	}
