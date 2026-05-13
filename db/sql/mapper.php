@@ -207,7 +207,7 @@ class Mapper extends \DB\Cursor {
 	*	@param $filter string|array
 	*	@param $options array
 	**/
-	function stringify($fields,$filter=NULL,array $options=NULL) {
+	function stringify($fields,$filter=NULL,?array $options=NULL) {
 		if (!$options)
 			$options=[];
 		$options+=[
@@ -306,7 +306,7 @@ class Mapper extends \DB\Cursor {
 	*	@param $options array
 	*	@param $ttl int|array
 	**/
-	function select($fields,$filter=NULL,array $options=NULL,$ttl=0) {
+	function select($fields,$filter=NULL,?array $options=NULL,$ttl=0) {
 		list($sql,$args)=$this->stringify($fields,$filter,$options);
 		$result=$this->db->exec($sql,$args,$ttl);
 		$out=[];
@@ -332,7 +332,7 @@ class Mapper extends \DB\Cursor {
 	*	@param $options array
 	*	@param $ttl int|array
 	**/
-	function find($filter=NULL,array $options=NULL,$ttl=0) {
+	function find($filter=NULL,?array $options=NULL,$ttl=0) {
 		if (!$options)
 			$options=[];
 		$options+=[
@@ -358,7 +358,7 @@ class Mapper extends \DB\Cursor {
 	*	@param $options array
 	*	@param $ttl int|array
 	**/
-	function count($filter=NULL,array $options=NULL,$ttl=0) {
+	function count($filter=NULL,?array $options=NULL,$ttl=0) {
 		$adhoc=[];
 		// with grouping involved, we need to wrap the actualy query and count the results
 		if ($subquery_mode=($options && !empty($options['group']))) {
@@ -728,11 +728,7 @@ class Mapper extends \DB\Cursor {
 			!$this->fields[$field]['nullable'];
 	}
 
-	/**
-	*	Retrieve external iterator for fields
-	*	@return object
-	**/
-	function getiterator() {
+	function getiterator(): \Traversable {
 		return new \ArrayIterator($this->cast());
 	}
 

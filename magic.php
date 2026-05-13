@@ -21,6 +21,7 @@
 */
 
 //! PHP magic wrapper
+#[\AllowDynamicProperties]
 abstract class Magic implements ArrayAccess {
 
 	/**
